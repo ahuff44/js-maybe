@@ -42,7 +42,7 @@ console.log(Maybe(obj)
   .bind(x => L.get(L.ofPath('props', 'prop'), x))
   .maybe('No value', x => x))); // 'value'
 
-  console.log(Maybe(obj)
-    .bind(x => L.get(L.ofPath('props', 'otherProp'), x))
-    .maybe('No value', x => x))); // 'No value'
+console.log(Maybe(obj)
+  .bind(x => L.get(L.ofPath('props', 'otherProp'), x))
+  .maybe('No value', x => x))); // 'No value'
 ```
