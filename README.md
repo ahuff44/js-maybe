@@ -1,0 +1,2 @@
+# js-maybe
+Maybe monad
