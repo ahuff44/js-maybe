@@ -4,7 +4,7 @@ const isJust = Symbol('isJust');
 function Maybe (x) {
 
   return typeof x === 'undefined' || x === null ||
-    (x[isNothing] && x[Symbol.isNothing]() === true) ?
+    (x[isNothing] && x[isNothing]() === true) ?
       Nothing() : Just(x);
 }
 
