@@ -1,11 +1,10 @@
 const isNothing = Symbol('isNothing');
-
-Symbol.isNothing = isNothing;
+const isJust = Symbol('isJust');
 
 function Maybe (x) {
 
   return typeof x === 'undefined' || x === null ||
-    (x[Symbol.isNothing] && x[Symbol.isNothing]() === true) ?
+    (x[isNothing] && x[Symbol.isNothing]() === true) ?
       Nothing() : Just(x);
 }
 
@@ -15,7 +14,11 @@ function Just (x) {
 
     bind (fn) { return Maybe(fn.call(null, x)); },
     maybe (defx, fn) { return fn.call(null, x); },
-    [Symbol.isNothing]() { return false; }
+    fromJust() { return x; },
+    [isNothing]() { return false; },
+    [isJust]() { return true; },
+    toString() { return x.toString(); },
+    valueOf() { return x; }
   };
 }
 
@@ -25,8 +28,13 @@ function Nothing() {
 
     bind() { return this; },
     maybe (defx, fn) { return defx; },
-    [Symbol.isNothing]() { return true; }
+    fromJust() { return Nothing(); },
+    [isNothing]() { return true; },
+    [isJust]() { return false; },
+    toString() { return ''; },
+    valueOf() { return null; }
   };
 }
 
+export { isNothing, isJust };
 export default Maybe;
