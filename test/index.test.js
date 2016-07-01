@@ -1,10 +1,10 @@
 import assert from 'assert';
-import Maybe, { isNothing, isJust } from '../index';
+import Maybe from '../index';
 
 function id (x) { return x; }
 function dbl (x) { return x * x; }
 
-Array.prototype[isNothing] = function() {
+Array.prototype.isNothing = function() {
 
   return this.length === 0;
 };
@@ -17,14 +17,14 @@ describe('Maybe', () => {
   it('should return Just', () => {
 
     assert.equal(
-      Maybe(5)[isJust](),
+      Maybe(5).isJust(),
       true);
   });
 
   it('should return Nothing', () => {
 
     assert.equal(
-      Maybe(null)[isNothing](),
+      Maybe(null).isNothing(),
       true);
   });
 
@@ -45,7 +45,7 @@ describe('Just', () => {
   it('bind should return Just', () => {
 
     assert.equal(
-      Maybe(5).bind(id)[isJust](),
+      Maybe(5).bind(id).isJust(),
       true);
   });
 
@@ -66,14 +66,14 @@ describe('Just', () => {
   it('[Symbol.isNothing] should return false', () => {
 
     assert.equal(
-      Maybe(5)[isNothing](),
+      Maybe(5).isNothing(),
       false);
   });
 
   it('[Symbol.isJust] should return true', () => {
 
     assert.equal(
-      Maybe(5)[isJust](),
+      Maybe(5).isJust(),
       true);
   });
 
@@ -118,14 +118,14 @@ describe('Nothing', () => {
   it('[Symbol.isNothing] should return true', () => {
 
     assert.equal(
-      Maybe(null)[isNothing](),
+      Maybe(null).isNothing(),
       true);
   });
 
   it('[Symbol.isJust] should return false', () => {
 
     assert.equal(
-      Maybe(null)[isJust](),
+      Maybe(null).isJust(),
       false);
   });
 
