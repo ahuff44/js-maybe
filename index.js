@@ -1,4 +1,4 @@
-export default function Maybe (x) {
+function Maybe (x) {
 
   return typeof x === 'undefined' || x === null ||
     (x.isNothing && x.isNothing() === true) ?
@@ -32,3 +32,5 @@ function Nothing() {
     valueOf() { return null; }
   };
 }
+
+module.exports.default = Maybe
