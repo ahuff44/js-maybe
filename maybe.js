@@ -1,9 +1,9 @@
-export default function Maybe (x) {
+module.exports = function Maybe (x) {
 
   return typeof x === 'undefined' || x === null ||
     (x.isNothing && x.isNothing() === true) ?
       Nothing() : Just(x);
-}
+};
 
 function Just (x) {
 
