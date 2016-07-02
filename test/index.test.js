@@ -4,13 +4,6 @@ import Maybe from '../index';
 function id (x) { return x; }
 function dbl (x) { return x * x; }
 
-Array.prototype.isNothing = function() {
-  return this.length === 0;
-};
-
-const x = 1;
-const arr = [1, 2, 3];
-
 describe('Maybe', () => {
   it('should return Just', () => {
     assert.equal(
@@ -45,15 +38,30 @@ describe('Maybe', () => {
     );
   });
 
-  it('should process values with Symbol.isNothing on prototype', () => {
+  it('should ignore non-Maybe objects with a isNothing method on prototype', () => {
+    Array.prototype.isNothing = function() {
+      return this.length === 0;
+    };
+    const arr = [1, 2, 3];
+
     assert.equal(
-      Maybe(arr).bind(([x, ...rest]) => x).valueOr(true),
-      arr[0]
+      Maybe(arr).isJust(),
+      true
     );
 
     assert.equal(
-      Maybe([]).bind(([x, ...rest]) => x).valueOr(true),
+      Maybe(arr).isNothing(),
+      false
+    );
+
+    assert.equal(
+      Maybe([]).isJust(),
       true
+    );
+
+    assert.equal(
+      Maybe([]).isNothing(),
+      false
     );
   });
 });
@@ -135,19 +143,19 @@ describe('Nothing', () => {
 describe('laws', () => {
   it('should have type constructor (left identity)', () => {
     assert.equal(
-      Maybe(x).bind(id).valueOr(true),
-      Maybe(id(x)).valueOr(false));
+      Maybe(5).bind(id).valueOr(true),
+      Maybe(id(5)).valueOr(false));
   });
 
   it('should have unit function (right identity)', () => {
     assert.equal(
-      Maybe(x).bind(id).valueOr(true),
-      Maybe(x).valueOr(false));
+      Maybe(5).bind(id).valueOr(true),
+      Maybe(5).valueOr(false));
   });
 
   it('should have binding operation (associativity)', () => {
     assert.equal(
-      Maybe(x).bind(id).bind(dbl).valueOr(true),
-      Maybe(x).bind(x => dbl(id(x))).valueOr(false));
+      Maybe(5).bind(id).bind(dbl).valueOr(true),
+      Maybe(5).bind(x => dbl(id(x))).valueOr(false));
   });
 });

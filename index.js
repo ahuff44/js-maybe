@@ -1,8 +1,10 @@
+const isMaybe = Symbol('isMaybe');
+
 function Maybe (x) {
-  if (typeof x === 'undefined' || x === null || (x.isNothing && x.isNothing() === true)) {
+  if (typeof x === 'undefined' || x === null) {
       return Nothing();
-  } else if (x.isJust && x.isJust() === true) {
-    return x.bind(x => x);
+  } else if (x[isMaybe] === true) {
+    return x;
   } else {
     return Just(x);
   }
@@ -14,7 +16,8 @@ function Just (x) {
     valueOr(defx) { return x; },
     isNothing() { return false; },
     isJust() { return true; },
-    toString() { return x.toString(); }
+    toString() { return x.toString(); },
+    [isMaybe]: true
   };
 }
 
@@ -24,7 +27,8 @@ function Nothing() {
     valueOr(defx) { return defx; },
     isNothing() { return true; },
     isJust() { return false; },
-    toString() { return ''; }
+    toString() { return ''; },
+    [isMaybe]: true
   };
 }
 
