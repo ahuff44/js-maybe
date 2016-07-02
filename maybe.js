@@ -1,9 +1,9 @@
-module.exports = function Maybe (x) {
+function Maybe (x) {
 
   return typeof x === 'undefined' || x === null ||
     (x.isNothing && x.isNothing() === true) ?
       Nothing() : Just(x);
-};
+}
 
 function Just (x) {
 
@@ -32,3 +32,5 @@ function Nothing() {
     valueOf() { return null; }
   };
 }
+
+module.exports = Maybe;
