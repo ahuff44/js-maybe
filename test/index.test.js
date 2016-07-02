@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Maybe from '../index';
+import Maybe from '../maybe';
 
 function id (x) { return x; }
 function dbl (x) { return x * x; }
